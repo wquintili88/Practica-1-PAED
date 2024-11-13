@@ -1,5 +1,11 @@
 package org.example;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Task {
     private String name;
     private String date_limit;
@@ -19,9 +25,9 @@ public class Task {
         this.edifici = edifici;
     }
 
-    public static List<Task> readTasksFromFile(Strinf filePath) {
+    public static <Strinf> List<Task> readTasksFromFile(Strinf filePath) {
         List<Task> tasks = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(String.valueOf(filePath)))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] fields = line.split(";");
