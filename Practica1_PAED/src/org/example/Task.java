@@ -25,28 +25,21 @@ public class Task {
         this.edifici = edifici;
     }
 
-    public static <Strinf> List<Task> readTasksFromFile(Strinf filePath) {
-        List<Task> tasks = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(String.valueOf(filePath)))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] fields = line.split(";");
-                if (fields.length == 7) {
-                    String name = fields[0];
-                    String date_limit = fields[1];
-                    int temps = Integer.parseInt(fields[2]);
-                    int dificultat = Integer.parseInt(fields[3]);
-                    int progress = Integer.parseInt(fields[4]);
-                    String color = fields[5];
-                    String edifici = fields[6];
-                    tasks.add(new Task(name, date_limit, temps, dificultat, progress, color, edifici));
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return tasks;
-
+    public static Task fromLine(String line) {
+        String[] parts = line.split(";");
+        return new Task(
+                parts[0],
+                parts[1],
+                Integer.parseInt(parts[2]),
+                Integer.parseInt(parts[3]),
+                Integer.parseInt(parts[4]),
+                parts[5],
+                parts[6]
+        );
     }
 
+
+    public String getName() {
+        return name;
+    }
 }
