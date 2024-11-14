@@ -145,9 +145,9 @@ public class Main {
     // Metodo para ordenar una lista de tareas utilizando el algoritmo de selección
     private static String selectionSort(ArrayList<Task> tasks) {
         int n = tasks.size();                                                   // Obtiene el tamaño de la lista de tareas
-        for (int i = 0; i < n - 2; i++) {                                       // Itera sobre la lista hasta el penúltimo elemento
+        for (int i = 0; i < n - 1; i++) {                                       // Itera sobre la lista hasta el penúltimo elemento
             int min = i;                                                        // Asume que el elemento actual es el mínimo
-            for (int j = i + 1; j < n-1; j++) {                                 // Compara el elemento actual con los siguientes
+            for (int j = i + 1; j <= n-1; j++) {                                 // Compara el elemento actual con los siguientes
                 if (tasks.get(j).getName().compareTo(tasks.get(min).getName()) < 0) { // Si encuentra un elemento menor
                     min = j;                                                    // Actualiza el índice del mínimo
                 }
@@ -162,7 +162,7 @@ public class Main {
     // Metodo para ordenar una lista de tareas utilizando el algoritmo de inserción
     private static String insertionSort(ArrayList<Task> tasks) {
         int n = tasks.size();                                                   // Obtiene el tamaño de la lista de tareas
-        for (int i = 1; i < n - 1; i++) {                                       // Itera desde el segundo elemento hasta el penúltimo
+        for (int i = 1; i < n; i++) {                                       // Itera desde el segundo elemento hasta el penúltimo
             Task key = tasks.get(i);                                            // Toma el elemento actual como clave
             int j = i - 1;                                                      // Inicializa j con el índice del elemento anterior
                                                                                 // Desplaza los elementos mayores que la clave una posición hacia adelante
