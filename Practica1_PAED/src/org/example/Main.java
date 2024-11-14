@@ -55,11 +55,41 @@ public class Main {
         }while(op<1 || op>6);
         //while(op<1 && op>6); -> no funciona siempre es false
 
-        // Ordenar las tareas utilizando el algoritmo de selección
-        selectionSort(tasks);
-        /*
-        * NO TERMINA DE FUNCIONAR CORRECTAMENTE YA QUE LA ULTIMA TAREA NO SE ORDENA
-        * */
+        do {
+            System.out.println("Which algorithm do you want to use:");
+            System.out.println("\t1.selectionSort");
+            System.out.println("\t2.insertionSort");
+            System.out.println("\t3.QuickSort");
+            System.out.println("\t4.Merge Sort");
+            System.out.println("Introduce option: ");
+            op = scanner.nextInt();
+
+            switch (op) {
+                case 1:
+                    // Ordenar las tareas utilizando el algoritmo de selección
+                    selectionSort(tasks);
+                    /*
+                     * NO TERMINA DE FUNCIONAR CORRECTAMENTE YA QUE LA ULTIMA TAREA NO SE ORDENA
+                     */
+                    break;
+                case 2:
+                    // Ordenar las tareas utilizando el algoritmo de inserción
+                    insertionSort(tasks);
+                    /*
+                     * NO TERMINA DE FUNCIONAR CORRECTAMENTE YA QUE LA ULTIMA TAREA NO SE ORDENA
+                     */
+                    break;
+                case 3:
+                    //QuickSort(tasks);
+                    break;
+                case 4:
+                    //MergeSort(tasks);
+                    break;
+                default:
+                    System.out.print("Invalid option!");
+            }
+        }while(op<1 || op>3);
+
         // Imprimir las tareas ordenadas
         for (Task task : tasks) {
             System.out.println(task.getName());
@@ -114,19 +144,35 @@ public class Main {
     }
     // Metodo para ordenar una lista de tareas utilizando el algoritmo de selección
     private static String selectionSort(ArrayList<Task> tasks) {
-        int n = tasks.size(); // Obtiene el tamaño de la lista de tareas
-        for (int i = 0; i < n - 2; i++) { // Itera sobre la lista hasta el penúltimo elemento
-            int min = i; // Asume que el elemento actual es el mínimo
-            for (int j = i + 1; j < n-1; j++) { // Compara el elemento actual con los siguientes
+        int n = tasks.size();                                                   // Obtiene el tamaño de la lista de tareas
+        for (int i = 0; i < n - 2; i++) {                                       // Itera sobre la lista hasta el penúltimo elemento
+            int min = i;                                                        // Asume que el elemento actual es el mínimo
+            for (int j = i + 1; j < n-1; j++) {                                 // Compara el elemento actual con los siguientes
                 if (tasks.get(j).getName().compareTo(tasks.get(min).getName()) < 0) { // Si encuentra un elemento menor
-                    min = j; // Actualiza el índice del mínimo
+                    min = j;                                                    // Actualiza el índice del mínimo
                 }
             }
-            Task temp = tasks.get(min); // Intercambia el elemento mínimo encontrado con el elemento actual
+        Task temp = tasks.get(min);                                             // Intercambia el elemento mínimo encontrado con el elemento actual
             tasks.set(min, tasks.get(i));
             tasks.set(i, temp);
         }
-        return "Selection sort"; // Retorna el nombre del algoritmo utilizado
+        return "Selection sort";                                                // Retorna el nombre del algoritmo utilizado
+    }
+
+    // Metodo para ordenar una lista de tareas utilizando el algoritmo de inserción
+    private static String insertionSort(ArrayList<Task> tasks) {
+        int n = tasks.size();                                                   // Obtiene el tamaño de la lista de tareas
+        for (int i = 1; i < n - 1; i++) {                                       // Itera desde el segundo elemento hasta el penúltimo
+            Task key = tasks.get(i);                                            // Toma el elemento actual como clave
+            int j = i - 1;                                                      // Inicializa j con el índice del elemento anterior
+                                                                                // Desplaza los elementos mayores que la clave una posición hacia adelante
+            while (j >= 0 && tasks.get(j).getName().compareTo(key.getName()) > 0) {
+                tasks.set(j + 1, tasks.get(j));                                 // Mueve el elemento una posición hacia adelante
+            j = j - 1;                                                          // Decrementa j
+            }
+        tasks.set(j + 1, key);                                                  // Coloca la clave en su posición correcta
+        }
+        return "Insertion sort";                                                // Retorna el nombre del algoritmo utilizado
     }
 
     private static String askForString(String message, Scanner scanner) {
