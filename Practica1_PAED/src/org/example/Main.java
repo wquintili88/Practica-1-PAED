@@ -143,7 +143,7 @@ public class Main {
         }
     }
     // Metodo para ordenar una lista de tareas utilizando el algoritmo de selección
-    private static String selectionSort(ArrayList<Task> tasks) {
+    private static void selectionSort(ArrayList<Task> tasks) {
         int n = tasks.size();                                                   // Obtiene el tamaño de la lista de tareas
         for (int i = 0; i < n - 1; i++) {                                       // Itera sobre la lista hasta el penúltimo elemento
             int min = i;                                                        // Asume que el elemento actual es el mínimo
@@ -156,11 +156,11 @@ public class Main {
             tasks.set(min, tasks.get(i));
             tasks.set(i, temp);
         }
-        return "Selection sort";                                                // Retorna el nombre del algoritmo utilizado
+        //return "Selection sort";                                              // Retorna el nombre del algoritmo utilizado
     }
 
     // Metodo para ordenar una lista de tareas utilizando el algoritmo de inserción
-    private static String insertionSort(ArrayList<Task> tasks) {
+    private static void insertionSort(ArrayList<Task> tasks) {
         int n = tasks.size();                                                   // Obtiene el tamaño de la lista de tareas
         for (int i = 1; i < n; i++) {                                       // Itera desde el segundo elemento hasta el penúltimo
             Task key = tasks.get(i);                                            // Toma el elemento actual como clave
@@ -172,8 +172,53 @@ public class Main {
             }
         tasks.set(j + 1, key);                                                  // Coloca la clave en su posición correcta
         }
-        return "Insertion sort";                                                // Retorna el nombre del algoritmo utilizado
+        //return "Insertion sort";                                              // Retorna el nombre del algoritmo utilizado
     }
+
+    private void mergeSort(ArrayList<Task> tasks, int i , int j) {
+        if (i < j) {
+            int m = (i + j) / 2;
+            mergeSort(tasks, i, m); //LEFT
+            mergeSort(tasks, m + 1, j); //RIGHT
+            merge(tasks, i, m, j);
+        }
+        //return "Merge sort";
+    }
+    private void merge(ArrayList<Task> tasks, int i, int meitat, int j) {
+
+        int left = i;
+        int right = meitat + 1;
+        int cursor = i;
+        ArrayList<Task> aux = new ArrayList<>(tasks);
+        while ((left <= meitat)&&(right <= j)) {
+            if (tasks.get(left).getName().compareTo(tasks.get(right).getName()) < 0) {
+                aux.set(cursor, tasks.get(left));
+                left++;
+            } else {
+                aux.set(cursor, tasks.get(right));
+                right++;
+            }
+            cursor++;
+        }
+        while (left <= meitat) {
+            aux.set(cursor, tasks.get(left));
+            left++;
+            cursor++;
+        }
+        while (right <= j) {
+            aux.set(cursor, tasks.get(right));
+            right++;
+            cursor++;
+        }
+        cursor = i;
+        while (cursor <= j) {
+            tasks.set(cursor, aux.get(cursor));
+            cursor++;
+        }
+    }
+
+
+
 
     private static String askForString(String message, Scanner scanner) {
         System.out.print(message);
