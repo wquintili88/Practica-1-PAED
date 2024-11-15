@@ -15,6 +15,7 @@ public class Task {
     private String color;
     private String edifici;
 
+    // Constructor
     public Task(String name, String date_limit, int temps, int dificultat, int progress, String color, String edifici) {
         this.name = name;
         this.date_limit = date_limit;
@@ -25,6 +26,14 @@ public class Task {
         this.edifici = edifici;
     }
 
+    /*
+    *
+    * Fromline
+    * Main objetive: Create a Task object from a line of a file
+    * Parameters: String line
+    * Return: Task class object.
+    *
+     */
     public static Task fromLine(String line) {
         String[] parts = line.split(";");
         return new Task(
@@ -38,10 +47,8 @@ public class Task {
         );
     }
 
-
-    public String getName() {
-        return name;
-    }
-    public int getDificultat() { return dificultat; }
-    public int getProgress() { return progress; }
+    // Getters
+    public String getName()     { return name;       }
+    public int getDificultat()  { return dificultat; }
+    public int getProgress()    { return progress;   }
 }
