@@ -125,8 +125,8 @@ public class Main {
     *
     * FillArrTasks
     * Main objective: Fill the array with the tasks from the dataSet.
-    * Parameters: String path
-    * Return: none
+    * Parameters: String path.
+    * Return: none.
     *
         */
 

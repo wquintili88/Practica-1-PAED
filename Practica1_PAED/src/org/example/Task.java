@@ -30,7 +30,7 @@ public class Task {
     *
     * Fromline
     * Main objetive: Create a Task object from a line of a file
-    * Parameters: String line
+    * Parameters: String line.
     * Return: Task class object.
     *
      */
