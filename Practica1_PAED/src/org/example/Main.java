@@ -15,6 +15,7 @@ public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
 
+
         int op=0;
         Scanner scanner = new Scanner(System.in);
 
@@ -81,18 +82,23 @@ public class Main {
                     break;
                 case 3:
                     //QuickSort(tasks);
+                    QuickSort(tasks, 0, tasks.size()-1);
                     break;
                 case 4:
                     //MergeSort(tasks);
+                    mergeSort(tasks, 0, tasks.size()-1);
+
                     break;
                 default:
                     System.out.print("Invalid option!");
             }
-        }while(op<1 || op>3);
+        }while(op<1 || op>4);
 
         // Imprimir las tareas ordenadas
         for (Task task : tasks) {
-            System.out.println(task.getName());
+            System.out.print(task.getName());
+            System.out.print("-"+task.getDificultat());
+            System.out.println("-"+task.getProgress());
         }
 
         /*   TEST ARR SAVED VALUES
@@ -174,8 +180,8 @@ public class Main {
         }
         //return "Insertion sort";                                              // Retorna el nombre del algoritmo utilizado
     }
-
-    private void mergeSort(ArrayList<Task> tasks, int i , int j) {
+    //ecesita optimización
+    private static void mergeSort(ArrayList<Task> tasks, int i, int j) {
         if (i < j) {
             int m = (i + j) / 2;
             mergeSort(tasks, i, m); //LEFT
@@ -184,21 +190,56 @@ public class Main {
         }
         //return "Merge sort";
     }
-    private void merge(ArrayList<Task> tasks, int i, int meitat, int j) {
+    private static void merge(ArrayList<Task> tasks, int i, int meitat, int j) {
 
         int left = i;
         int right = meitat + 1;
         int cursor = i;
         ArrayList<Task> aux = new ArrayList<>(tasks);
+
+        /*
+        -->PRIORITY:
+            1.TASK NAME
+            2.DIFICULTY OF THE TASK
+            3.PROGRES OF THE TASK
+         */
         while ((left <= meitat)&&(right <= j)) {
-            if (tasks.get(left).getName().compareTo(tasks.get(right).getName()) < 0) {
-                aux.set(cursor, tasks.get(left));
-                left++;
-            } else {
-                aux.set(cursor, tasks.get(right));
-                right++;
+            //We look if the name match
+            if (tasks.get(left).getName().equals(tasks.get(right).getName())){
+                //If the name does not match then we look if the Dificulty match
+                if(tasks.get(left).getDificultat()==(tasks.get(right).getDificultat()))
+                {
+                    //If not, we directly order the tasks for the progess
+                    if(tasks.get(left).getProgress()>tasks.get(right).getProgress())
+                    {
+                        aux.set(cursor, tasks.get(left));
+                        left++;
+                    }else{
+                        aux.set(cursor, tasks.get(right));
+                        right++;
+                    }
+                }else{
+
+                    if(tasks.get(left).getDificultat()>tasks.get(right).getDificultat())
+                    {
+                        aux.set(cursor, tasks.get(left));
+                        left++;
+                    }else{
+                        aux.set(cursor, tasks.get(right));
+                        right++;
+                    }
+                }
+            }else {
+                if (tasks.get(left).getName().compareTo(tasks.get(right).getName()) < 0) {
+                    aux.set(cursor, tasks.get(left));
+                    left++;
+                } else {
+                    aux.set(cursor, tasks.get(right));
+                    right++;
+                }
+                cursor++;
             }
-            cursor++;
+
         }
         while (left <= meitat) {
             aux.set(cursor, tasks.get(left));
@@ -216,8 +257,37 @@ public class Main {
             cursor++;
         }
     }
+    private static int particio(ArrayList<Task> tasks, int i, int j) {
+        int left = i;
+        int right = j;
+        int meitat = (i + j) / 2;
+        Task pivot = tasks.get(meitat);
 
-
+        while (left <= right) {
+            while (tasks.get(left).getName().compareTo(pivot.getName()) < 0) {
+                left++;
+            }
+            while (tasks.get(right).getName().compareTo(pivot.getName()) > 0) {
+                right--;
+            }
+            if (right <= left) {
+                Task aux = tasks.get(i);
+                tasks.set(i, tasks.get(j));
+                tasks.set(j, aux);
+                left++;
+                right--;
+            }
+        }
+        return right;
+    }
+    private static void QuickSort(ArrayList<Task> tasks, int i, int j) {
+        if (i < j) {
+            int p = 0;
+            p = particio(tasks, i, j);
+            QuickSort(tasks, i, p);
+            QuickSort(tasks, p+1, j);
+        }
+    }
 
 
     private static String askForString(String message, Scanner scanner) {

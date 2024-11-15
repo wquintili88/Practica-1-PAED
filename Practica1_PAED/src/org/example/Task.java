@@ -42,4 +42,6 @@ public class Task {
     public String getName() {
         return name;
     }
+    public int getDificultat() { return dificultat; }
+    public int getProgress() { return progress; }
 }
